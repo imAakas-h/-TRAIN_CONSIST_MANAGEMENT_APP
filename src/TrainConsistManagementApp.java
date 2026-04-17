@@ -4,35 +4,50 @@ public class TrainConsistManagementApp {
 
     public static void main(String[] args) {
 
-        System.out.println("=== UC18: Linear Search for Bogie ID ===");
+        System.out.println("=== UC19: Binary Search for Bogie ID ===");
 
-        // Array of bogie IDs (unsorted)
+        // Unsorted input (to show requirement handling)
         String[] bogieIds = {
-                "BG101",
-                "BG205",
                 "BG309",
-                "BG412",
-                "BG550"
+                "BG101",
+                "BG550",
+                "BG205",
+                "BG412"
         };
 
-        // Search key (you can change this)
-        String searchKey = "BG309";
+        String searchKey = "BG205";
 
-        System.out.println("Searching for: " + searchKey);
+        // 🔹 Step 1: Sort before Binary Search (mandatory precondition)
+        Arrays.sort(bogieIds);
 
+        System.out.println("Sorted Array: " + Arrays.toString(bogieIds));
+
+        // 🔹 Binary Search Initialization
+        int low = 0;
+        int high = bogieIds.length - 1;
         boolean found = false;
 
-        // 🔍 Linear Search
-        for (int i = 0; i < bogieIds.length; i++) {
+        // 🔍 Binary Search Loop
+        while (low <= high) {
 
-            if (bogieIds[i].equals(searchKey)) {
+            int mid = (low + high) / 2;
+
+            int compareResult = bogieIds[mid].compareTo(searchKey);
+
+            if (compareResult == 0) {
                 found = true;
-                System.out.println("Bogie found at index: " + i);
-                break; // early termination
+                System.out.println("Bogie found at index: " + mid);
+                break;
+            }
+            else if (compareResult < 0) {
+                low = mid + 1; // search right side
+            }
+            else {
+                high = mid - 1; // search left side
             }
         }
 
-        // Result
+        // 🔹 Result
         if (found) {
             System.out.println("Search Result: BOGIE EXISTS");
         } else {
